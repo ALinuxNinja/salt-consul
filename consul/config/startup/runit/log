@@ -1,0 +1,6 @@
+#!/bin/bash
+
+## Make sure permissions are allright
+chown -R consul:consul /var/log/consul/{{datacenter}}/
+
+exec chpst -uconsul svlogd -tt /var/log/consul/{{datacenter}}/

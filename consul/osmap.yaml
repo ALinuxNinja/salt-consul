@@ -1,0 +1,33 @@
+Ubuntu:
+  common:
+    packages:
+      - augeas-tools
+      - augeas-lenses
+      - libaugeas0
+      - python-augeas
+      - unzip
+      - curl
+      - runit
+      - dnsmasq
+  "12.04":
+    init: sysv
+  "14.04":
+    init: upstart
+  "16.04":
+    init: systemd
+CentOS:
+  common:
+    install_path: /usr/sbin/consul
+    conf_dir: /etc/consul.d
+    packages:
+      - augeas
+      - augeas-libs
+      - python-augeas
+      - unzip
+      - curl
+      - runit
+      - dnsmasq
+  6:
+    init: sysv
+  7:
+    init: systemd

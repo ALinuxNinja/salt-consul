@@ -1,0 +1,16 @@
+[Unit]
+Description=consul-{{datacenter}}
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+EnvironmentFile=-/etc/sysconfig/consul-{{datacenter}}
+Environment=GOMAXPROCS=2
+Restart=on-failure
+User=consul
+ExecStart={{install_dir}}/{{datacenter}}/bin/consul agent -config-dir {{install_dir}}/{{datacenter}}/config -data-dir {{install_dir}}/{{datacenter}}/data
+ExecReload=/bin/kill -HUP $MAINPID
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=multi-user.target

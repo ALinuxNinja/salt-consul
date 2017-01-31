@@ -1,0 +1,4 @@
+consul:
+  install_dir: /opt/consul
+  conf_dir: /etc/consul.d
+  scripts_dir: /etc/salt/alinuxninja/consul/scripts

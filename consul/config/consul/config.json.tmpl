@@ -1,0 +1,21 @@
+{%- macro process_dict(config_dict) -%}
+{%- for config, config_val in config_dict.iteritems() -%}
+{%- if config_val is mapping -%}
+{{ process_dict(config_val)|indent(4, True) }}
+{% else -%}
+{%- if (config_val|lower == "true") or (config_val|lower == "false") or (config_val is number) -%}
+"{{config}}": {{config_val|lower}}{%- if not loop.last -%},{%- endif %}
+{% elif config_val is iterable and config_val is not string -%}
+"{{config}}": [
+{%- for item in config_val -%}
+"{{item}}"{%- if not loop.last -%},{%- endif %}
+{%- endfor -%}]{%- if not loop.last -%},{%- endif %}
+{% else -%}
+"{{config}}": "{{config_val}}"{%- if not loop.last -%},{%- endif %}
+{% endif -%}
+{%- endif -%}
+{%- endfor -%}
+{%- endmacro -%}
+{
+{{ process_dict(datacenter_opts)|indent(4, True) }}
+}

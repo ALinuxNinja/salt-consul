@@ -1,0 +1,37 @@
+#!/bin/bash
+
+## Stop on errors
+set -e
+
+ARCH="amd64"
+
+## DO NOT EDIT BELOW THIS LINE ##
+if [[ $VERSION == "latest" ]]; then
+	VERSION=$(curl -s https://releases.hashicorp.com/consul/ | awk -F'href="' -F'"' '(/<a.*href="\/consul/) && (!/rc/){print $2}' | awk -F "/" '{print $3}' | head -1)
+	CUSTOM_VERSION=False
+  echo "Latest Version: $VERSION"
+else
+	CUSTOM_VERSION=True
+fi
+
+## Some logic to check current version
+if [[ ! -f ${INSTALLDIR}/consul ]]; then
+	VERSION_INSTALLED="Not Installed"
+else
+	VERSION_INSTALLED=$(${INSTALLDIR}/consul version | awk -F'Consul v' '(/Consul.*v.*[0-9.]/){print $2}')
+fi
+echo "Current Version: $VERSION_INSTALLED"
+
+if [[ $VERSION > $VERSION_INSTALLED ]] || [[ $VERSION_INSTALLED == "Not Installed" ]] || [[ $CUSTOM_VERSION == True ]]; then
+	rm -f consul consul_$VERSION.zip
+	echo "Now Downloading to consul_$VERSION.zip"
+	curl "https://releases.hashicorp.com/consul/$VERSION/consul_${VERSION}_linux_${ARCH}.zip" > consul_$VERSION.zip
+	echo "Extracting Consul..."
+	unzip -q consul_$VERSION.zip
+	echo "Installing Consul in /usr/local/sbin/consul..."
+	mv consul ${INSTALLDIR}/consul
+	echo "Cleaning Up..."
+	rm consul_$VERSION.zip
+else
+	echo "Up to date, no need to download"
+fi

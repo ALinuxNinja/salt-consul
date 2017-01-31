@@ -1,0 +1,6 @@
+#!/bin/bash
+
+## Make sure permissions are allright
+chown -R consul:consul {{install_dir}}/{{datacenter}}/
+
+exec chpst -uconsul {{install_dir}}/{{datacenter}}/bin/consul agent -config-dir {{install_dir}}/{{datacenter}}/config -data-dir {{install_dir}}/{{datacenter}}/data
