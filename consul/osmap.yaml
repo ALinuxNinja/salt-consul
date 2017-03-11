@@ -7,7 +7,6 @@ Ubuntu:
       - python-augeas
       - unzip
       - curl
-      - runit
       - dnsmasq
   "12.04":
     init: sysv
@@ -15,6 +14,18 @@ Ubuntu:
     init: upstart
   "16.04":
     init: systemd
+Debian:
+  common:
+    packages:
+      - augeas-tools
+      - augeas-lenses
+      - libaugeas0
+      - python-augeas
+      - unzip
+      - curl
+      - dnsmasq
+  "7":
+    init: sysv
 CentOS:
   common:
     install_path: /usr/sbin/consul
@@ -25,7 +36,6 @@ CentOS:
       - python-augeas
       - unzip
       - curl
-      - runit
       - dnsmasq
   6:
     init: sysv
