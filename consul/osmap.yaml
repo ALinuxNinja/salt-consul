@@ -24,7 +24,7 @@ Debian:
       - unzip
       - curl
       - dnsmasq
-  "7":
+  "8":
     init: sysv
 CentOS:
   common:
