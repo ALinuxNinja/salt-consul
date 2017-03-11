@@ -6,10 +6,10 @@
 {% set os_distro = salt['grains.filter_by'](osmap,grain='os',default='Debian') %}
 
 {# Map Operating System version #}
-{% if grains['os'] == 'CentOS' %}
-{% set os_settings = salt['grains.filter_by'](os_distro,grain='osmajorrelease',base='common') %}
-{% else %}
+{% if grains['os'] == 'Ubuntu' %}
 {% set os_settings = salt['grains.filter_by'](os_distro,grain='osrelease',base='common') %}
+{% else %}
+{% set os_settings = salt['grains.filter_by'](os_distro,grain='osmajorrelease',base='common') %}
 {% endif %}
 
 {# Merge in defaults to OS settings #}
