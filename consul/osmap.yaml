@@ -11,7 +11,7 @@ Ubuntu:
   "12.04":
     init: sysv
   "14.04":
-    init: upstart
+    init: sysv
   "16.04":
     init: systemd
 Debian:
