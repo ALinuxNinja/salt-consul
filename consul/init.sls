@@ -63,6 +63,18 @@ consul_config-{{datacenter}}:
     - context:
       datacenter: {{datacenter}}
       install_dir: {{consul['install_dir']}}
+{% elif consul['init'] =='sysv' %}
+/etc/systemd/system/consul-{{datacenter}}.service:
+  file.managed:
+    - source: salt://consul/init/sysv/consul
+    - mode: 0755
+    - user: root
+    - group: root
+    - template: jinja
+    - context:
+      datacenter: {{datacenter}}
+      install_dir: {{consul['install_dir']}}
+{% endif %}
 {% if datacenter_opts['service']['enabled'] == True %}
 consul-{{datacenter}}_service:
   service.running:
@@ -82,7 +94,6 @@ consul-{{datacenter}}_service-disableall:
     - enable: True
 {% else %}
     - enable: False
-{% endif %}
 {% endif %}
 {% endif %}
 {% endfor %}
