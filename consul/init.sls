@@ -64,7 +64,7 @@ consul_config-{{datacenter}}:
       datacenter: {{datacenter}}
       install_dir: {{consul['install_dir']}}
 {% elif consul['init'] =='sysv' %}
-/etc/init.d/consul-{{datacenter}}.service:
+/etc/init.d/consul-{{datacenter}}:
   file.managed:
     - source: salt://consul/init/sysv/consul
     - mode: 0755
